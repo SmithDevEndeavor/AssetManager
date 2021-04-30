@@ -12,8 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -211,7 +209,7 @@ public class AssetDBApplication extends JFrame {
     					result.getString("Model") + " " + result.getString("Series") + 
     					result.getString("ServiceTag") + " " + result.getString("SerialNum") + 
     					result.getString("PurchaseDate") + " " + result.getString("DateAssigned") + 
-    					result.getString("Cost");
+    					result.getString("Cost \n") + "------------------------------ \n";
     			array.add(displayText);
     		}
     		//Brand, Model, Series, ServiceTag, SerialNum," + "PurchaseDate, DateAssigned, Cost
@@ -228,15 +226,58 @@ public class AssetDBApplication extends JFrame {
     
     private void edit() throws IOException {
     	//The logic for viewing one asset in the database goes here
-    	
+    	String response;
+    	String assetID;
+    	String employeeID;
+    	String roomNum;
+    	Connection conn;
     	//display input dialog
-    	//display scrollframe 
-    	//Show all assets in scrollframe
-    	//select asset by service tag/serial id in input dialog
+    	response = JOptionPane.showInputDialog("Enter AssetID of asset to be editted");
+    	assetID = response;
+    	
     	//change employee/ location prompt for both? or prompt for all 
-    	//create preparedStatement
-    	//commit changes
-    	//close db connection
+    	response = JOptionPane.showInputDialog("Enter employeeID assignment. (Leave blank for no assignment)");
+    	employeeID = response;
+    	
+    	response = JOptionPane.showInputDialog("Enter new room number assignment.");
+    	roomNum = response;
+    	
+    	if(roomNum != null && employeeID != null){
+    		try{
+    			conn = getConnection();
+    			
+    			PreparedStatement updateEmpStatement = conn.prepareStatement("ALTER TABLE assets " + 
+    			"SET EmployeeID='" + employeeID + "' WHERE AssetID='" + assetID + "'");
+    			
+    			PreparedStatement updateRoomStatement = conn.prepareStatement("ALTER TABLE assets " + 
+    	    	"SET RoomNum='" + roomNum + "' WHERE AssetID='" + assetID + "'");
+    			
+    			
+    			
+    	    	conn.close();//close db connection
+    		}catch(Exception e){
+    			e.printStackTrace();
+    		}
+    	}else if (roomNum == null && employeeID != null){
+    		try{
+    			conn = getConnection();
+    			PreparedStatement updateEmpStatement = conn.prepareStatement("ALTER TABLE assets " + 
+    			"SET EmployeeID='" + employeeID + "' WHERE AssetID='" + assetID + "'");
+    			
+    			
+    			conn.close();//close db connection
+    		}catch(Exception e){
+    			e.printStackTrace();
+    		}
+    	}else if(roomNum == null){
+    		try{
+    			conn = getConnection();
+    			conn.close();//close db connection
+    			textArea.setText("Must enter a valid room number to make changes");
+    		}catch(Exception e){
+    			e.printStackTrace();
+    		}
+    	}
     	
     	
     }
