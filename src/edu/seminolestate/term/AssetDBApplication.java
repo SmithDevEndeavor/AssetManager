@@ -126,7 +126,7 @@ public class AssetDBApplication extends JFrame {
         });
          
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(480, 320);
+        setSize(860, 350);
         setLocationRelativeTo(null);
     }
     
@@ -188,12 +188,10 @@ public class AssetDBApplication extends JFrame {
     		
     		
     		insertAsset.executeUpdate(); // execute PreparedStatement
-    		conn.commit(); // commit changes to DB
     		conn.close(); // close DB connection 
-    		textArea.setText("Asset was added to the database."); //confirmation message to text area
+    		textArea.setText("Asset was added to the database.");
     	}catch(Exception e){
     		e.printStackTrace();
-    		textArea.setText("Could not add Asset.");
     	}
     	
     	
@@ -215,15 +213,17 @@ public class AssetDBApplication extends JFrame {
     		ResultSet result = statement.executeQuery(); //execute SELECT statement
     		
     		ArrayList<String> array = new ArrayList<String>(); //array to store individual records
-    		array.add(" Asset ID | Brand | Model | Series | ServiceTag | SerialNum | DatePurchased | DateAssigned | Cost \n \n");
+    		array.add(" Asset ID | RoomNum | EmployeeID | AssetTypeID | Brand | Model | Series | "
+    				+ "ServiceTag | SerialNum | DatePurchased | DateAssigned | Cost \n \n");
     		while(result.next()){
     			
     			//recursively show all in textArea
-    			displayText = result.getString("AssetID") + " | " + result.getString("brand") + " | " + 
-    					result.getString("Model") + " | " + result.getString("Series") + " | " +
-    					result.getString("ServiceTag") + " | " + result.getString("SerialNum") + " | " +
-    					result.getString("DatePurchased") + " | " + result.getString("DateAssigned") + " | " +
-    					result.getString("Cost") + "\n \n";
+    			displayText = result.getString("AssetID") + " | " + result.getString("RoomNum") + " | " +
+    					result.getString("AssetTypeID") +  " | " + result.getString("EmployeeID") + " | " + 
+    					result.getString("brand") +  " | " + result.getString("Model") + " | " + 
+    					result.getString("Series") + " | " + result.getString("ServiceTag") + " | " + 
+    					result.getString("SerialNum") + " | " + result.getString("DatePurchased") + " | " + 
+    					result.getString("DateAssigned") + " | $" + result.getString("Cost") + "\n \n";
     			array.add(displayText);
     		}
     		
