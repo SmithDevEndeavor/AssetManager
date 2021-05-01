@@ -1,10 +1,13 @@
 USE AssetDB;
 
-ALTER TABLE assetcheckout
+ALTER TABLE assets
 DROP FOREIGN KEY FK_Chk_EmployeeID;
-ALTER TABLE assetcheckout
-DROP FOREIGN KEY FK_Chk_AssetID;
+ALTER TABLE assets
+DROP FOREIGN KEY FK_Chk_AssetTypeID;
+ALTER TABLE assets
+DROP FOREIGN KEY FK_Chk_RoomNum;
 
-DROP TABLE assetcheckout;
+DROP TABLE assettype;
 DROP TABLE employee;
 DROP TABLE assets;
+DROP TABLE room;

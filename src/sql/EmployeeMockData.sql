@@ -35,3 +35,6 @@ VALUE(1002, 102, 2, "2020-09-01", "2020-10-02", "Dell", "Precision", "3432", "G3
 
 
 select * from assets;
+select * from room;
+select * from employee;
+select * from assettype;
