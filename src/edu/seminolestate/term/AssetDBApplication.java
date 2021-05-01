@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-import org.apache.ibatis.jdbc.ScriptRunner;
+//import org.apache.ibatis.jdbc.ScriptRunner;
 
 public class AssetDBApplication extends JFrame {
 	private JTextArea textArea;
@@ -172,15 +172,14 @@ public class AssetDBApplication extends JFrame {
     	cost = response;
     	
     	
-    	//create SQL statement for INSERT
+    	//create SQL query with response data
     	String sqlStatement = "INSERT INTO Assets (EmployeeID, AssetTypeID, RoomNum, Brand, Model, Series, ServiceTag, SerialNum,"
     						+ "DatePurchased, DateAssigned, Cost) " 
     						+ "VALUE(" + employeeID + "," + assetTypeID + "," + roomNum + "," + "\"" + brand + 
     						"\"" + "," + "\"" + model + "\"" + "," +  "\"" + series + "\"" + "," +
     						"\"" + serviceTag + "\"" + "," + serialNum + "," + "\"" + purchaseDate + "\""  + "," + 
-    						"\"" + dateAssigned + "\"" + "," + cost +");"; // create SQL query with response data
-    	//INSERT INTO assets (assets.RoomNum, assets.EmployeeID, assets.AssetTypeID, assets.DatePurchased, assets.DateAssigned, assets.Brand, assets.Model, assets.Series, assets.ServiceTag, assets.SerialNum, assets.Cost)
-    	//VALUE(1001, 101, 1, "2020-08-01", "2020-11-06", "Dell", "Latitude", "9410", "A3FH68", NULL, 3289.23);
+    						"\"" + dateAssigned + "\"" + "," + cost +");"; 
+    	
     	
     	 try{
     		Connection conn = getConnection(); // open DB connection
@@ -191,11 +190,10 @@ public class AssetDBApplication extends JFrame {
     		insertAsset.executeUpdate(); // execute PreparedStatement
     		conn.commit(); // commit changes to DB
     		conn.close(); // close DB connection 
+    		textArea.setText("Asset was added to the database."); //confirmation message to text area
     	}catch(Exception e){
     		e.printStackTrace();
     		textArea.setText("Could not add Asset.");
-    	}finally{
-    		textArea.setText(sqlStatement); 	// Confirmation message to textArea on success/error
     	}
     	
     	
@@ -217,26 +215,23 @@ public class AssetDBApplication extends JFrame {
     		ResultSet result = statement.executeQuery(); //execute SELECT statement
     		
     		ArrayList<String> array = new ArrayList<String>(); //array to store individual records
+    		array.add(" Asset ID | Brand | Model | Series | ServiceTag | SerialNum | DatePurchased | DateAssigned | Cost \n \n");
     		while(result.next()){
     			
     			//recursively show all in textArea
-    			displayText = result.getString("AssetID") + " " + result.getString("brand") + 
-    					result.getString("Model") + " " + result.getString("Series") + 
-    					result.getString("ServiceTag") + " " + result.getString("SerialNum") + 
-    					result.getString("DatePurchased") + " " + result.getString("DateAssigned") + 
-    					result.getString("Cost") + "\n------------------------------ \n";
+    			displayText = result.getString("AssetID") + " | " + result.getString("brand") + " | " + 
+    					result.getString("Model") + " | " + result.getString("Series") + " | " +
+    					result.getString("ServiceTag") + " | " + result.getString("SerialNum") + " | " +
+    					result.getString("DatePurchased") + " | " + result.getString("DateAssigned") + " | " +
+    					result.getString("Cost") + "\n \n";
     			array.add(displayText);
     		}
-    		//Brand, Model, Series, ServiceTag, SerialNum," + "PurchaseDate, DateAssigned, Cost
+    		
     		textArea.setText(array.toString());
     		conn.close(); //close db connection
     	}catch(Exception e){
     		e.printStackTrace();
-    	}
-    	
-    	
-    	
-    	
+    	}	
     }
     
     private void edit() throws IOException {
@@ -315,7 +310,7 @@ public class AssetDBApplication extends JFrame {
     			textArea.setText("No assetID was entered.");
     		}else{
     			deleteStatement.executeUpdate(); //execute PreparedStatement
-        		
+        		textArea.setText("Asset was deleted.");
     		}
     		
     		conn.close(); //close DB connection 
@@ -351,13 +346,15 @@ public class AssetDBApplication extends JFrame {
 	 * @throws IOException s
 	 */
 	public static void main(String[] args) throws IOException, Exception {
-		
+		/**
 		 String mysqlUrl = "jdbc:mysql://localhost/assetdb";
 	      Connection con = DriverManager.getConnection(mysqlUrl, "root", "root");
 	      System.out.println("Connection established......");
 	      ScriptRunner sr = new ScriptRunner(con);
 	      Reader reader = new BufferedReader(new FileReader("D:\\Database\\Homework\\Project\\AssetManager-main (1)\\AssetManager-main\\src\\sql\\CreateSchema.sql"));
 	      sr.runScript(reader);
+	      
+	      **/
 		//TODO run SQL scripts to insert mock data into tables for user
 		SwingUtilities.invokeLater(new Runnable(){
             @Override
