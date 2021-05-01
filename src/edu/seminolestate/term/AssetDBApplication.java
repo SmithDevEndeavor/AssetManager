@@ -15,14 +15,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-//import org.apache.ibatis.jdbc.ScriptRunner;
+import org.apache.ibatis.jdbc.ScriptRunner;
+
 
 public class AssetDBApplication extends JFrame {
 	private JTextArea textArea;
@@ -336,7 +336,7 @@ public class AssetDBApplication extends JFrame {
 	 * @throws IOException s
 	 */
 	public static void main(String[] args) throws IOException, Exception {
-		/**
+		
 		 String mysqlUrl = "jdbc:mysql://localhost/assetdb";
 	      Connection con = DriverManager.getConnection(mysqlUrl, "root", "root");
 	      System.out.println("Connection established......");
@@ -344,7 +344,7 @@ public class AssetDBApplication extends JFrame {
 	      Reader reader = new BufferedReader(new FileReader("D:\\Database\\Homework\\Project\\AssetManager-main (1)\\AssetManager-main\\src\\sql\\CreateSchema.sql"));
 	      sr.runScript(reader);
 	      
-	      **/
+	      
 		//TODO run SQL scripts to insert mock data into tables for user
 		SwingUtilities.invokeLater(new Runnable(){
             @Override
