@@ -240,6 +240,7 @@ public class AssetDBApplication extends JFrame {
     	String assetID;
     	String employeeID;
     	String roomNum;
+    	String dateAssigned;
     	Connection conn;
     	//display input dialog
     	response = JOptionPane.showInputDialog("Enter AssetID of asset to be editted");
@@ -252,6 +253,9 @@ public class AssetDBApplication extends JFrame {
     	response = JOptionPane.showInputDialog("Enter new room number assignment.");
     	roomNum = response;
     	
+    	response = JOptionPane.showInputDialog("Enter new assignmentdate. (YYYY-MM-DD)");
+    	dateAssigned = response;
+    	
     	if(roomNum != null && employeeID != null){
     		try{
     			conn = getConnection();
@@ -262,12 +266,16 @@ public class AssetDBApplication extends JFrame {
     			PreparedStatement updateRoomStatement = conn.prepareStatement("UPDATE assets " + 
     	    	"SET RoomNum=" + roomNum + " WHERE AssetID=" + assetID);
     			
+    			PreparedStatement updateDateStatement = conn.prepareStatement("UPDATE assets " + 
+    	    	    	"SET DateAssigned=\"" + dateAssigned + "\" WHERE AssetID=" + assetID);
+    			
     			
     			updateEmpStatement.executeUpdate();
     			updateRoomStatement.executeUpdate();
+    			updateDateStatement.executeUpdate();
     	    	conn.close();//close db connection
     	    	textArea.setText("Asset: " + assetID + "\nEmployeeID update to: " + employeeID +
-    	    			"\nRoomNum update to: " + roomNum);
+    	    			"\nRoomNum update to: " + roomNum + "\nDateAssigned update to: " + dateAssigned);
     		}catch(Exception e){
     			e.printStackTrace();
     		}
