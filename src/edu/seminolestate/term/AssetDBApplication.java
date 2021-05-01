@@ -5,8 +5,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import org.apache.ibatis.jdbc.ScriptRunner;
 
 public class AssetDBApplication extends JFrame {
 	private JTextArea textArea;
@@ -346,10 +350,15 @@ public class AssetDBApplication extends JFrame {
 	 * @param args s
 	 * @throws IOException s
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, Exception {
 		
+		 String mysqlUrl = "jdbc:mysql://localhost/assetdb";
+	      Connection con = DriverManager.getConnection(mysqlUrl, "root", "root");
+	      System.out.println("Connection established......");
+	      ScriptRunner sr = new ScriptRunner(con);
+	      Reader reader = new BufferedReader(new FileReader("D:\\Database\\Homework\\Project\\AssetManager-main (1)\\AssetManager-main\\src\\sql\\CreateSchema.sql"));
+	      sr.runScript(reader);
 		//TODO run SQL scripts to insert mock data into tables for user
-		
 		SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run() {
