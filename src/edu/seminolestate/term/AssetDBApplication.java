@@ -337,22 +337,24 @@ public class AssetDBApplication extends JFrame {
 	 */
 	public static void main(String[] args) throws IOException, Exception {
 		//establish db connection and run SQL scripts to create schema and add data
-	      try{
-	    	  Connection conn = getConnection(); //open DB connection
-	    	  ScriptRunner sr = new ScriptRunner(conn); //pass connection to ScriptRunner object
-		      //instantiate Reader object and point to script for execution
-	    	  Reader reader = 
-		    		  new BufferedReader(new FileReader("C:\\Users\\smith\\workspace\\"
-		    		  + "CEN4333Term\\CEN4333Term\\src\\sql\\CreateSchema.sql"));
-	    	  // C:\Users\smith\workspace\CEN4333Term\CEN4333Term\src\sql
-		      sr.runScript(reader); //execute script with ScriptRunner object
-		      reader = 
-		    		  new BufferedReader(new FileReader("C:\\Users\\smith\\workspace\\"
-		    		  + "CEN4333Term\\CEN4333Term\\src\\sql\\EmployeeMockData.sql"));
-		      sr.runScript(reader);
-	      }catch(Exception e){
-	    	  e.printStackTrace();
-	      }
+		try{
+	    	Connection conn = getConnection(); //open DB connection
+	    	ScriptRunner sr = new ScriptRunner(conn); //pass connection to ScriptRunner object
+	    	
+	    	
+	    	Reader reader = //point FileReader to CreateSchema.sql in project directory
+		    		new BufferedReader(new FileReader("C:\\Users\\smith\\workspace\\"
+		    		+ "CEN4333Term\\CEN4333Term\\src\\sql\\CreateSchema.sql"));
+	    	  
+		    sr.runScript(reader); //execute script with ScriptRunner object
+		    
+		    reader = //point FileReader to EmployeeMockData.sql in project directory
+		    		new BufferedReader(new FileReader("C:\\Users\\smith\\workspace\\"
+		    		+ "CEN4333Term\\CEN4333Term\\src\\sql\\EmployeeMockData.sql"));
+		    sr.runScript(reader);
+	    }catch(Exception e){
+	    	e.printStackTrace();
+	    }
 	      
 	      
 	      
