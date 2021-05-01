@@ -208,8 +208,8 @@ public class AssetDBApplication extends JFrame {
     			displayText = result.getString("AssetID") + " " + result.getString("brand") + 
     					result.getString("Model") + " " + result.getString("Series") + 
     					result.getString("ServiceTag") + " " + result.getString("SerialNum") + 
-    					result.getString("PurchaseDate") + " " + result.getString("DateAssigned") + 
-    					result.getString("Cost \n") + "------------------------------ \n";
+    					result.getString("DatePurchased") + " " + result.getString("DateAssigned") + 
+    					result.getString("Cost") + "\n------------------------------ \n";
     			array.add(displayText);
     		}
     		//Brand, Model, Series, ServiceTag, SerialNum," + "PurchaseDate, DateAssigned, Cost
@@ -300,7 +300,7 @@ public class AssetDBApplication extends JFrame {
     			textArea.setText("No assetID was entered.");
     		}else{
     			deleteStatement.executeUpdate(); //execute PreparedStatement
-        		conn.commit(); //commit changes to DB
+        		
     		}
     		
     		conn.close(); //close DB connection 
