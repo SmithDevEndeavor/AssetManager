@@ -246,7 +246,7 @@ public class AssetDBApplication extends JFrame {
     	assetID = response;
     	
     	//change employee/ location prompt for both? or prompt for all 
-    	response = JOptionPane.showInputDialog("Enter employeeID assignment. (Leave blank for no assignment)");
+    	response = JOptionPane.showInputDialog("Enter new employeeID assignment.");
     	employeeID = response;
     	
     	response = JOptionPane.showInputDialog("Enter new room number assignment.");
@@ -256,40 +256,22 @@ public class AssetDBApplication extends JFrame {
     		try{
     			conn = getConnection();
     			
-    			PreparedStatement updateEmpStatement = conn.prepareStatement("ALTER TABLE assets " + 
-    			"SET EmployeeID='" + employeeID + "' WHERE AssetID='" + assetID + "'");
+    			PreparedStatement updateEmpStatement = conn.prepareStatement("UPDATE assets " + 
+    			"SET EmployeeID=" + employeeID + " WHERE AssetID=" + assetID);
     			
-    			PreparedStatement updateRoomStatement = conn.prepareStatement("ALTER TABLE assets " + 
-    	    	"SET RoomNum='" + roomNum + "' WHERE AssetID='" + assetID + "'");
+    			PreparedStatement updateRoomStatement = conn.prepareStatement("UPDATE assets " + 
+    	    	"SET RoomNum=" + roomNum + " WHERE AssetID=" + assetID);
     			
     			
-    			
+    			updateEmpStatement.executeUpdate();
+    			updateRoomStatement.executeUpdate();
     	    	conn.close();//close db connection
-    		}catch(Exception e){
-    			e.printStackTrace();
-    		}
-    	}else if (roomNum == null && employeeID != null){
-    		try{
-    			conn = getConnection();
-    			PreparedStatement updateEmpStatement = conn.prepareStatement("ALTER TABLE assets " + 
-    			"SET EmployeeID='" + employeeID + "' WHERE AssetID='" + assetID + "'");
-    			
-    			
-    			conn.close();//close db connection
-    		}catch(Exception e){
-    			e.printStackTrace();
-    		}
-    	}else if(roomNum == null){
-    		try{
-    			conn = getConnection();
-    			conn.close();//close db connection
-    			textArea.setText("Must enter a valid room number to make changes");
+    	    	textArea.setText("Asset: " + assetID + "\nEmployeeID update to: " + employeeID +
+    	    			"\nRoomNum update to: " + roomNum);
     		}catch(Exception e){
     			e.printStackTrace();
     		}
     	}
-    	
-    	
     }
 
     private void delete()throws Exception {
