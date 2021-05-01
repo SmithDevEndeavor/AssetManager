@@ -29,9 +29,9 @@ INSERT INTO room (room.RoomName)
 VALUE("Reception");
 
 INSERT INTO assets (assets.RoomNum, assets.EmployeeID, assets.AssetTypeID, assets.DatePurchased, assets.DateAssigned, assets.Brand, assets.Model, assets.Series, assets.ServiceTag, assets.SerialNum, assets.Cost)
-VALUE(1001, 101, 1, "2020-08-01", "2020-11-06", "Dell", "Latitude", "9410", "A3FH68", NULL, 3289.23);
+VALUE(1001, 101, 1, "2020-08-01", "2020-11-06", "Dell", "Latitude", "9410", "A3FH68", 23456, 3289.23);
 INSERT INTO assets (assets.RoomNum, assets.EmployeeID, assets.AssetTypeID, assets.DatePurchased, assets.DateAssigned, assets.Brand, assets.Model, assets.Series, assets.ServiceTag, assets.SerialNum, assets.Cost)
-VALUE(1002, 102, 2, "2020-09-01", "2020-10-02", "Dell", "Precision", "3432", "G3JH22", NULL, 600.63);
+VALUE(1002, 102, 2, "2020-09-01", "2020-10-02", "Dell", "Precision", "3432", "G3JH22", 23457, 600.63);
 
 
 select * from assets;
