@@ -336,7 +336,7 @@ public class AssetDBApplication extends JFrame {
 	 * @throws IOException s
 	 */
 	public static void main(String[] args) throws IOException, Exception {
-		
+		//establish db connection and run SQL scripts to create schema and add data
 	      try{
 	    	  Connection conn = getConnection(); //open DB connection
 	    	  ScriptRunner sr = new ScriptRunner(conn); //pass connection to ScriptRunner object
