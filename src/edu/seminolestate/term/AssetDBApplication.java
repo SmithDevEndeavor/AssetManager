@@ -139,33 +139,44 @@ public class AssetDBApplication extends JFrame {
     	String serviceTag;
     	String serialNum;
     	String cost;
+    	String roomNum;
+    	String employeeID;
+    	String assetTypeID;
     	
     	//Input dialog boxes to save responses to variables
-    	response = JOptionPane.showInputDialog("Type a Date Assigned");
+    	response = JOptionPane.showInputDialog("Type an existing room number");
+    	roomNum = response;
+    	response = JOptionPane.showInputDialog("Enter assigned EmployeeID");
+    	employeeID = response;
+    	response = JOptionPane.showInputDialog("Enter asset type ID");
+    	assetTypeID = response;
+    	response = JOptionPane.showInputDialog("Type asset Date Assigned (ex. YYYY-MM-DD");
     	dateAssigned = response;
-    	response = JOptionPane.showInputDialog("Type a Purchase Date");
+    	response = JOptionPane.showInputDialog("Type asset Purchase Date (ex. YYYY-MM-DD");
     	purchaseDate = response;
-    	response = JOptionPane.showInputDialog("Type a Brand");
+    	response = JOptionPane.showInputDialog("Type asset Brand");
     	brand = response;
-    	response = JOptionPane.showInputDialog("Type a Model");
+    	response = JOptionPane.showInputDialog("Type asset Model");
     	model = response;
-    	response = JOptionPane.showInputDialog("Type a Series");
+    	response = JOptionPane.showInputDialog("Type asset Series");
     	series = response;
-    	response = JOptionPane.showInputDialog("Type a Service Tag");
+    	response = JOptionPane.showInputDialog("Type asset Service Tag");
     	serviceTag = response;
-    	response = JOptionPane.showInputDialog("Type a Serial Number");
+    	response = JOptionPane.showInputDialog("Type asset Serial Number");
     	serialNum = response;
-    	response = JOptionPane.showInputDialog("Type a Cost");
+    	response = JOptionPane.showInputDialog("Type asset Cost (ex. 19.99)");
     	cost = response;
     	
     	
     	//create SQL statement for INSERT
-    	String sqlStatement = "INSERT INTO Assets (Brand, Model, Series, ServiceTag, SerialNum,"
-    						+ "PurchaseDate, DateAssigned, Cost) " 
-    						+ "VALUE (" + brand + "," + model + "," + series + "," +
-    						serviceTag + "," + serialNum + "," + purchaseDate + "," + 
-    						dateAssigned + "," + cost +")"; // create SQL query with response data
-    	
+    	String sqlStatement = "INSERT INTO Assets (EmployeeID, AssetTypeID, RoomNum, Brand, Model, Series, ServiceTag, SerialNum,"
+    						+ "DatePurchased, DateAssigned, Cost) " 
+    						+ "VALUE(" + employeeID + "," + assetTypeID + "," + roomNum + "," + "\"" + brand + 
+    						"\"" + "," + "\"" + model + "\"" + "," +  "\"" + series + "\"" + "," +
+    						"\"" + serviceTag + "\"" + "," + serialNum + "," + "\"" + purchaseDate + "\""  + "," + 
+    						"\"" + dateAssigned + "\"" + "," + cost +");"; // create SQL query with response data
+    	//INSERT INTO assets (assets.RoomNum, assets.EmployeeID, assets.AssetTypeID, assets.DatePurchased, assets.DateAssigned, assets.Brand, assets.Model, assets.Series, assets.ServiceTag, assets.SerialNum, assets.Cost)
+    	//VALUE(1001, 101, 1, "2020-08-01", "2020-11-06", "Dell", "Latitude", "9410", "A3FH68", NULL, 3289.23);
     	
     	 try{
     		Connection conn = getConnection(); // open DB connection
@@ -180,7 +191,7 @@ public class AssetDBApplication extends JFrame {
     		e.printStackTrace();
     		textArea.setText("Could not add Asset.");
     	}finally{
-    		textArea.setText("Added Asset."); 	// Confirmation message to textArea on success/error
+    		textArea.setText(sqlStatement); 	// Confirmation message to textArea on success/error
     	}
     	
     	
